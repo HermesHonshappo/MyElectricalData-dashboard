@@ -1,6 +1,6 @@
 Simple Grafana dashboard for MyElectricalData
 
-Written for influxDB v2, with flux language
+Written for influxDB v2, with flux language. It needs you to configure a datasource in grafana pointing to your InfluxDB server. I named my datasource "InfluxDB2". Not sure if it's critical for the dashboard to work.
 
 Does not use the PDL as variable in the queries, so removed that as a variable. It pulls all data in InfluxDB assuming a single PDL
 
