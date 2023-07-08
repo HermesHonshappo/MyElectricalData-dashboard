@@ -22,7 +22,7 @@ You need to go to grafana settings -> administration -> data sources and add a d
 Then fill the URL of the database, organization ID and token that you have generated in InfluxDB
 
 <img width="698" alt="Screenshot 2023-07-08 at 15 40 42" src="https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/16019f1f-fd1a-4a89-ab48-83ab0702300c">
-<img width="698" alt="Screenshot 2023-07-08 at 15 40 42" src="https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/275a0f6f-4f63-4199-9c06-e3fcbd669990">
+<img width="609" alt="Screenshot 2023-07-08 at 15 42 20" src="https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/4a536550-b228-4194-8404-c05183d80b09">
 
 **Installing plugins**
 
