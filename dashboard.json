@@ -30,8 +30,7 @@
   "panels": [
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -104,8 +103,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -266,8 +264,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -390,8 +387,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -525,8 +521,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -757,8 +752,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -882,8 +876,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -1006,8 +999,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -1124,8 +1116,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -1243,8 +1234,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -1367,8 +1357,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -1506,8 +1495,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -1797,8 +1785,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -2065,8 +2052,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2176,8 +2162,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2275,8 +2260,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2386,8 +2370,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2485,8 +2468,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2596,8 +2578,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2695,8 +2676,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2806,8 +2786,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -2905,8 +2884,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -3092,8 +3070,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -3279,8 +3256,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -3466,8 +3442,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "fieldConfig": {
         "defaults": {
@@ -3653,8 +3628,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -3777,8 +3751,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -3901,8 +3874,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -4025,8 +3997,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
@@ -4191,8 +4162,7 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "PmgauXk4k"
+        "type": "influxdb"
       },
       "description": "",
       "fieldConfig": {
