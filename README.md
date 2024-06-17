@@ -38,3 +38,7 @@ You need the two plugins below installed. Go to settings -> administration -> pl
 2) added link & screenshots of the two plugins to install
 3) added screenshot of install for influxDB connector
 
+2024-06-17 update:
+1) Added primary energy factor. Used for energy classification of house in France
+2) current and previous years are now computed automatically. Should not need an update each year
+3) current year % is now based on same consumption the year before (Jan1st to current date vs Jan1st 1 year ago vs 1 year ago today)
