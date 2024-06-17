@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 9,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -62,7 +62,6 @@
       },
       "hideTimeOverride": false,
       "id": 4,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -76,15 +75,17 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
           "rawQuery": true,
@@ -161,7 +162,6 @@
         "y": 0
       },
       "id": 15,
-      "links": [],
       "maxDataPoints": 3,
       "options": {
         "legend": {
@@ -183,6 +183,7 @@
           "values": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -193,7 +194,7 @@
           "alias": "HP",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -210,7 +211,7 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\" or r[\"measure_type\"] == \"HP\")\n  |> group(columns: [\"measure_type\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield(name: \"sum\")",
@@ -295,13 +296,12 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 2,
         "x": 12,
         "y": 0
       },
       "hideTimeOverride": false,
       "id": 9,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -315,15 +315,17 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -340,7 +342,7 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
@@ -376,7 +378,131 @@
           ]
         }
       ],
-      "title": "Heures Pleines ($price_HP€/kWh)",
+      "title": "HP ($price_HP€/kWh)",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "#299c46",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 500
+              },
+              {
+                "color": "#d44a3a",
+                "value": 1000
+              }
+            ]
+          },
+          "unit": "€"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 14,
+        "y": 0
+      },
+      "hideTimeOverride": false,
+      "id": 11,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "consumption_detail",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "price"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "pdl",
+              "operator": "=~",
+              "value": "/^$pdl$/"
+            },
+            {
+              "condition": "AND",
+              "key": "measure_type",
+              "operator": "=",
+              "value": "HC"
+            }
+          ]
+        }
+      ],
+      "title": "HC ($price_HC€/kWh)",
       "transformations": [
         {
           "id": "merge",
@@ -404,12 +530,16 @@
                 "value": null
               },
               {
+                "color": "#EAB839",
+                "value": 1000
+              },
+              {
                 "color": "red",
-                "value": 0
+                "value": 2000
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "€"
         },
         "overrides": []
       },
@@ -419,9 +549,7 @@
         "x": 16,
         "y": 0
       },
-      "hideTimeOverride": false,
-      "id": 20,
-      "links": [],
+      "id": 22,
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -430,30 +558,22 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "lastNotNull"
+            "sum"
           ],
-          "fields": "/.*/",
+          "fields": "",
           "values": true
         },
-        "text": {},
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
+          "alias": "HC",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
-          },
-          "hide": true,
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"STD\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()\n",
-          "refId": "A"
-        },
-        {
-          "alias": "HP",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -469,12 +589,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "enedisgateway_detail",
+          "hide": false,
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\" or r[\"measure_type\"] == \"HP\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HCHP\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()\n",
-          "refId": "B",
+          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\" or r[\"measure_type\"] == \"HP\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()\n",
+          "rawQuery": true,
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -500,28 +621,24 @@
               "condition": "AND",
               "key": "measure_type",
               "operator": "=",
-              "value": "HP"
+              "value": "HC"
             }
           ]
-        },
-        {
-          "datasource": {
-            "type": "__expr__",
-            "uid": "__expr__"
-          },
-          "expression": "(($A/$B)-1)",
-          "hide": false,
-          "refId": "C",
-          "type": "math"
         }
       ],
-      "title": "Base vs HC/HP",
-      "transformations": [],
+      "title": "Tarif HC/HP",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -679,9 +796,10 @@
       },
       "hideTimeOverride": true,
       "id": 28,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -692,18 +810,18 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": true,
-          "measurement": "enedisgateway_daily",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: -12mo)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> yield(name: \"sum\")",
@@ -739,7 +857,7 @@
             "type": "__expr__",
             "uid": "__expr__"
           },
-          "expression": "$A/1000/120",
+          "expression": "$A/1000/$surface_maison*$facteur_energie",
           "hide": false,
           "refId": "B",
           "type": "math"
@@ -747,7 +865,6 @@
       ],
       "timeFrom": "1y",
       "title": "Classe Energetique",
-      "transformations": [],
       "type": "gauge"
     },
     {
@@ -790,7 +907,6 @@
       },
       "hideTimeOverride": false,
       "id": 10,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -804,15 +920,17 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -829,7 +947,7 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
@@ -876,34 +994,53 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
+          "fieldMinMax": false,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "#299c46",
+                "color": "text",
                 "value": null
-              },
-              {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 500
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1000
               }
             ]
           },
-          "unit": "€"
+          "unit": "watth"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "consumption_detail"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyEUR"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "€"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 3,
@@ -912,8 +1049,7 @@
         "y": 3
       },
       "hideTimeOverride": false,
-      "id": 11,
-      "links": [],
+      "id": 89,
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -927,15 +1063,153 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "consumption_detail",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "kW"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "pdl",
+              "operator": "=~",
+              "value": "/^$pdl$/"
+            }
+          ]
+        },
+        {
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "$A/1000*$price_STD",
+          "hide": false,
+          "refId": "B",
+          "type": "math"
+        }
+      ],
+      "title": "Tarif Base ($price_STD€/kWh)",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 16,
+        "y": 3
+      },
+      "hideTimeOverride": false,
+      "id": 20,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": true
+        },
+        "showPercentChange": false,
+        "text": {},
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": true,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"STD\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()\n",
+          "refId": "A"
+        },
+        {
+          "alias": "HP",
+          "datasource": {
+            "type": "influxdb",
+            
           },
           "groupBy": [
             {
@@ -951,13 +1225,11 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "enedisgateway_detail",
+          "hide": true,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
-          "rawQuery": false,
-          "refId": "A",
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\" or r[\"measure_type\"] == \"HP\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HCHP\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()\n",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -983,135 +1255,22 @@
               "condition": "AND",
               "key": "measure_type",
               "operator": "=",
-              "value": "HC"
+              "value": "HP"
             }
           ]
-        }
-      ],
-      "title": "Heures Creuses ($price_HC€/kWh)",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "#299c46",
-                "value": null
-              },
-              {
-                "color": "rgba(237, 129, 40, 0.89)",
-                "value": 576000
-              },
-              {
-                "color": "#d44a3a",
-                "value": 1008000
-              }
-            ]
-          },
-          "unit": "€"
         },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 16,
-        "y": 3
-      },
-      "hideTimeOverride": false,
-      "id": 27,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": true
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.4.7",
-      "targets": [
         {
           "datasource": {
-            "type": "influxdb",
-            "uid": "PmgauXk4k"
+            "type": "__expr__",
+            "uid": "__expr__"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
+          "expression": "(($A/$B)-1)",
           "hide": false,
-          "measurement": "enedisgateway_daily",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()\n",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "price"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "pdl",
-              "operator": "=~",
-              "value": "/^$pdl$/"
-            }
-          ]
+          "refId": "C",
+          "type": "math"
         }
       ],
-      "title": "Tarif Base ($price_STD€/kWh)",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
+      "title": "Base vs HC/HP",
       "type": "stat"
     },
     {
@@ -1154,7 +1313,6 @@
       },
       "hideTimeOverride": false,
       "id": 12,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -1168,15 +1326,17 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -1193,7 +1353,7 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "autogen",
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: v.windowPeriod, fn: sum, createEmpty: false)\n  |> yield(name: \"sum\")",
@@ -1234,130 +1394,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 1000
-              },
-              {
-                "color": "red",
-                "value": 2000
-              }
-            ]
-          },
-          "unit": "€"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 12,
-        "y": 6
-      },
-      "id": 22,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "sum"
-          ],
-          "fields": "",
-          "values": true
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "9.4.7",
-      "targets": [
-        {
-          "alias": "HC",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "PmgauXk4k"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "enedisgateway_detail",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\" or r[\"measure_type\"] == \"HP\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()\n",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "price"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "pdl",
-              "operator": "=~",
-              "value": "/^$pdl$/"
-            },
-            {
-              "condition": "AND",
-              "key": "measure_type",
-              "operator": "=",
-              "value": "HC"
-            }
-          ]
-        }
-      ],
-      "title": "Tarif HC/HP",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -1400,7 +1438,6 @@
       },
       "hideTimeOverride": false,
       "id": 78,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "none",
@@ -1414,15 +1451,17 @@
           "fields": "/^B$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -1439,7 +1478,6 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "import \"math\"\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: -12mo)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> group(columns: [\"_field\"])\n  |> sum(column: \"_value\")\n  |> yield(name: \"sum\")",
@@ -1479,7 +1517,7 @@
             "type": "__expr__",
             "uid": "__expr__"
           },
-          "expression": "$A/1000/120",
+          "expression": "$A/1000/$surface_maison*$facteur_energie",
           "hide": false,
           "refId": "B",
           "type": "math"
@@ -1495,7 +1533,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -1504,6 +1543,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1517,6 +1557,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "stepAfter",
             "lineWidth": 2,
             "pointSize": 5,
@@ -1636,14 +1677,13 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 16,
+        "w": 12,
         "x": 0,
         "y": 9
       },
       "hideTimeOverride": true,
       "id": 2,
       "interval": "10m",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -1656,6 +1696,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -1666,7 +1707,7 @@
           "alias": "HC",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -1683,10 +1724,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"W\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> aggregateWindow(every: 15m, fn: sum, createEmpty: false)\n  \n       \nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HC\"}))\n  |> keep(columns:FinalOutput)\n\nNamedSeries  |> yield(name: \"sum\")",
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"W\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)\n  \n       \nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HC\"}))\n  |> keep(columns:FinalOutput)\n\nNamedSeries  |> yield(name: \"sum\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1723,7 +1764,7 @@
           "alias": "HP",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -1740,10 +1781,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"W\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> aggregateWindow(every: 15m, fn: sum, createEmpty: false)\n  \n       \nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HP\"}))\n  |> keep(columns:FinalOutput)\n\nNamedSeries  |> yield(name: \"sum\")",
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"W\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: false)\n  \n       \nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HP\"}))\n  |> keep(columns:FinalOutput)\n\nNamedSeries  |> yield(name: \"sum\")",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1775,45 +1816,112 @@
             }
           ],
           "tz": "Europe/Paris"
+        },
+        {
+          "alias": "Temp. Ext.",
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "℃",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"home_assistant_db\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"℃\")\n  |> filter(fn: (r) => r[\"entity_id\"] == \"temperature_exterieur_temperature\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> aggregateWindow(every: 15m, fn: mean, createEmpty: false)\n       \nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Temp. Ext.\"}))\n  |> keep(columns:FinalOutput)\n\nNamedSeries  |> yield(name: \"mean\")\n",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "entity_id",
+              "operator": "=",
+              "value": "temperature_exterieur_temperature"
+            }
+          ]
+        },
+        {
+          "alias": "Temp. Ext.",
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"home_assistant_db\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"°C\" or r[\"_measurement\"] == \"℃\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"entity_id\"] == \"temperature_exterieur_temperature\")\n  |> aggregateWindow(every: 15m, fn: mean, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Temp. Ext.\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries |> yield()",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series"
         }
       ],
       "timeFrom": "7d",
       "timeShift": "12h",
-      "title": "Power Consumption - in (k)W",
-      "transformations": [],
+      "title": "Puissance consommée - en kW - 7 derniers jours",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "continuous-GrYlRd"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
+            "fillOpacity": 50,
+            "gradientMode": "scheme",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 3,
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 2,
+            "pointSize": 8,
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "always",
+            "showPoints": "never",
             "spanNulls": true,
             "stacking": {
               "group": "A",
@@ -1832,10 +1940,6 @@
               {
                 "color": "transparent",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 90000
               }
             ]
           },
@@ -1845,29 +1949,157 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Watt/Day"
+              "options": "HC"
+            },
+            "properties": [
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 60
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "HP"
+            },
+            "properties": [
+              {
+                "id": "custom.stacking",
+                "value": {
+                  "group": "A",
+                  "mode": "normal"
+                }
+              },
+              {
+                "id": "custom.drawStyle",
+                "value": "line"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "semi-dark-orange",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 60
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "Temp.%"
+            },
+            "properties": [
+              {
+                "id": "max",
+                "value": 35
+              },
+              {
+                "id": "min",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Temp. Ext."
             },
             "properties": [
               {
                 "id": "color",
                 "value": {
-                  "fixedColor": "#508642",
+                  "fixedColor": "text",
                   "mode": "fixed"
                 }
               },
               {
-                "id": "custom.pointSize",
-                "value": 10
+                "id": "custom.axisPlacement",
+                "value": "right"
               },
               {
-                "id": "custom.lineStyle",
+                "id": "unit",
+                "value": "celsius"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Temp. Int."
+            },
+            "properties": [
+              {
+                "id": "color",
                 "value": {
-                  "dash": [
-                    20,
-                    10
-                  ],
-                  "fill": "dash"
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
                 }
+              },
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              },
+              {
+                "id": "unit",
+                "value": "celsius"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 0
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 1
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Total"
+            },
+            "properties": [
+              {
+                "id": "custom.lineWidth",
+                "value": 4
+              },
+              {
+                "id": "custom.showPoints",
+                "value": "always"
+              },
+              {
+                "id": "custom.pointSize",
+                "value": 10
               }
             ]
           }
@@ -1875,26 +2107,25 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 8,
-        "x": 16,
+        "w": 12,
+        "x": 12,
         "y": 9
       },
       "hideTimeOverride": true,
-      "id": 17,
-      "links": [],
+      "id": 88,
       "options": {
         "legend": {
           "calcs": [
             "min",
             "max",
-            "mean",
-            "sum"
+            "mean"
           ],
           "displayMode": "table",
           "placement": "bottom",
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
@@ -1902,10 +2133,10 @@
       "pluginVersion": "8.4.4",
       "targets": [
         {
-          "alias": "Watt/Day",
+          "alias": "kWh/Day",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -1915,18 +2146,18 @@
               "type": "time"
             }
           ],
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: -30d, stop: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Watts/day\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()\n",
-          "rawQuery": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: -30d, stop: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Total\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "Wh"
+                  "kW"
                 ],
                 "type": "field"
               },
@@ -1943,16 +2174,52 @@
               "value": "/^$pdl$/"
             }
           ]
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: -30d, stop: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> timeShift(duration: -1d)\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HC\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: -30d, stop: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> timeShift(duration: -1d)\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HP\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"home_assistant_db\")\n  |> range(start: -30d, stop: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"°C\" or r[\"_measurement\"] == \"℃\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"entity_id\"] == \"temperature_exterieur_temperature\")\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Temp. Ext.\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries |> yield()",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"home_assistant_db\")\n  |> range(start: -30d, stop: -1d)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"°C\" or r[\"_measurement\"] == \"℃\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"entity_id\"] == \"temp_interieure_moyenne\")\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Temp. Int.\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries |> yield()",
+          "refId": "E"
         }
       ],
       "timeFrom": "30d",
-      "timeShift": "1d",
-      "title": "Energy Consumption - per Day (k)Wh",
+      "title": "Energie consommée par jour - en kWh - 30 derniers jours",
       "type": "timeseries"
     },
     {
       "datasource": {
-        "uid": "Linky"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "gridPos": {
@@ -1971,8 +2238,9 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.4.7",
-      "title": "2023",
+      "pluginVersion": "11.0.0",
+      "title": "Consommation mensuelle année en cours",
+      "transparent": true,
       "type": "text"
     },
     {
@@ -1996,8 +2264,9 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.4.7",
-      "title": "2022",
+      "pluginVersion": "11.0.0",
+      "title": "Consommation mensuelle année n-1",
+      "transparent": true,
       "type": "text"
     },
     {
@@ -2021,8 +2290,9 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.4.7",
-      "title": "2021",
+      "pluginVersion": "11.0.0",
+      "title": "Consommation mensuelle année n-2",
+      "transparent": true,
       "type": "text"
     },
     {
@@ -2046,13 +2316,15 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "9.4.7",
-      "title": "2020",
+      "pluginVersion": "11.0.0",
+      "title": "Consommation mensuelle année n-3",
+      "transparent": true,
       "type": "text"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2080,7 +2352,6 @@
         "y": 19
       },
       "id": 77,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2094,15 +2365,17 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -2113,10 +2386,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2023\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1d))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2154,7 +2427,7 @@
         {
           "id": "seriesToColumns",
           "options": {
-            "byField": "enedisgateway_daily.price"
+            "byField": "consumption.price"
           }
         }
       ],
@@ -2162,7 +2435,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2190,7 +2464,6 @@
         "y": 19
       },
       "id": 74,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2204,24 +2477,26 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {
           "titleSize": 1
         },
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == \"2023\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1d))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2255,12 +2530,12 @@
         }
       ],
       "title": "Coût (Hors forfait)",
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2288,7 +2563,6 @@
         "y": 19
       },
       "id": 33,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2302,15 +2576,17 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -2321,10 +2597,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2022\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2362,7 +2638,7 @@
         {
           "id": "seriesToColumns",
           "options": {
-            "byField": "enedisgateway_daily.price"
+            "byField": "consumption.price"
           }
         }
       ],
@@ -2370,7 +2646,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2398,7 +2675,6 @@
         "y": 19
       },
       "id": 45,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2412,24 +2688,26 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {
           "titleSize": 1
         },
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == \"2022\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2463,12 +2741,12 @@
         }
       ],
       "title": "Coût (Hors forfait)",
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2496,7 +2774,6 @@
         "y": 19
       },
       "id": 75,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2510,15 +2787,17 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -2529,10 +2808,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2021\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -2y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2570,7 +2849,7 @@
         {
           "id": "seriesToColumns",
           "options": {
-            "byField": "enedisgateway_daily.price"
+            "byField": "consumption.price"
           }
         }
       ],
@@ -2578,7 +2857,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2606,7 +2886,6 @@
         "y": 19
       },
       "id": 72,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2620,24 +2899,26 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {
           "titleSize": 1
         },
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == \"2021\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -2y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2671,12 +2952,12 @@
         }
       ],
       "title": "Coût (Hors forfait)",
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2704,7 +2985,6 @@
         "y": 19
       },
       "id": 76,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2718,15 +2998,17 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -2737,10 +3019,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2020\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -3y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2778,7 +3060,7 @@
         {
           "id": "seriesToColumns",
           "options": {
-            "byField": "enedisgateway_daily.price"
+            "byField": "consumption.price"
           }
         }
       ],
@@ -2786,7 +3068,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2814,7 +3097,6 @@
         "y": 19
       },
       "id": 73,
-      "links": [],
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -2828,24 +3110,26 @@
           "fields": "/^_value$/",
           "values": true
         },
+        "showPercentChange": false,
         "text": {
           "titleSize": 1
         },
-        "textMode": "value"
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": false,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == \"2020\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -3y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"price\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2879,12 +3163,12 @@
         }
       ],
       "title": "Coût (Hors forfait)",
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -2963,8 +3247,8 @@
         "y": 22
       },
       "id": 71,
-      "links": [],
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -2982,13 +3266,13 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "$tag_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -3005,10 +3289,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2023\")\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1d))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -3041,7 +3325,6 @@
           ]
         }
       ],
-      "title": "Consommation mensuelle 2023",
       "transformations": [
         {
           "id": "organize",
@@ -3070,7 +3353,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -3149,8 +3433,8 @@
         "y": 22
       },
       "id": 68,
-      "links": [],
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -3168,13 +3452,13 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "$tag_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -3191,10 +3475,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2022\")\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -3227,7 +3511,6 @@
           ]
         }
       ],
-      "title": "Consommation mensuelle 2022",
       "transformations": [
         {
           "id": "organize",
@@ -3256,7 +3539,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -3335,8 +3619,8 @@
         "y": 22
       },
       "id": 69,
-      "links": [],
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -3354,13 +3638,13 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "$tag_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -3377,10 +3661,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2021\")\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -2y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -3413,7 +3697,6 @@
           ]
         }
       ],
-      "title": "Consommation mensuelle 2021",
       "transformations": [
         {
           "id": "organize",
@@ -3442,7 +3725,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "fieldConfig": {
         "defaults": {
@@ -3521,8 +3805,8 @@
         "y": 22
       },
       "id": 70,
-      "links": [],
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -3540,13 +3824,13 @@
           }
         ]
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "$tag_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -3563,10 +3847,10 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2020\")\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -3y))\nfrom(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"month\",\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\n  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "table",
@@ -3599,7 +3883,6 @@
           ]
         }
       ],
-      "title": "Consommation mensuelle 2020",
       "transformations": [
         {
           "id": "organize",
@@ -3628,7 +3911,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -3661,8 +3945,7 @@
         "x": 0,
         "y": 36
       },
-      "id": 81,
-      "links": [],
+      "id": 84,
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -3676,22 +3959,24 @@
           "fields": "/.*/",
           "values": true
         },
-        "textMode": "value"
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "current_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": true,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2023\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "import \"date\"\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == string(v: date.year(t: -1d)))\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3727,10 +4012,10 @@
           "alias": "last_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "hide": true,
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2022\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "import \"date\"\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: date.sub(from: now(), d: 365d))\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == string(v: date.year(t: -1y)))\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series"
@@ -3746,12 +4031,12 @@
           "type": "math"
         }
       ],
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -3784,8 +4069,7 @@
         "x": 6,
         "y": 36
       },
-      "id": 79,
-      "links": [],
+      "id": 85,
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -3799,22 +4083,24 @@
           "fields": "/.*/",
           "values": true
         },
-        "textMode": "value"
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "current_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": true,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2022\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -1y))\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3850,10 +4136,10 @@
           "alias": "last_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "hide": true,
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2021\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "import \"date\"\nprevious_year_to_study = string(v: date.year(t: -2y))\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == previous_year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series"
@@ -3869,12 +4155,12 @@
           "type": "math"
         }
       ],
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -3907,8 +4193,7 @@
         "x": 12,
         "y": 36
       },
-      "id": 80,
-      "links": [],
+      "id": 86,
       "maxDataPoints": 100,
       "options": {
         "colorMode": "value",
@@ -3922,22 +4207,24 @@
           "fields": "/.*/",
           "values": true
         },
-        "textMode": "value"
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "9.4.7",
+      "pluginVersion": "11.0.0",
       "targets": [
         {
           "alias": "current_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [],
           "hide": true,
-          "measurement": "enedisgateway_daily",
+          "measurement": "consumption",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2021\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -2y))\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3973,10 +4260,10 @@
           "alias": "last_year",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "hide": true,
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == \"2020\")\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "import \"date\"\nprevious_year_to_study = string(v: date.year(t: -3y))\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == previous_year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series"
@@ -3992,12 +4279,136 @@
           "type": "math"
         }
       ],
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 18,
+        "y": 36
+      },
+      "id": 87,
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/.*/",
+          "values": true
+        },
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.0.0",
+      "targets": [
+        {
+          "alias": "current_year",
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "groupBy": [],
+          "hide": true,
+          "measurement": "consumption",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "import \"date\"\nyear_to_study = string(v: date.year(t: -3y))\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"current\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "price"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "pdl",
+              "operator": "=~",
+              "value": "/^$pdl$/"
+            },
+            {
+              "condition": "AND",
+              "key": "year",
+              "operator": "=",
+              "value": "2020"
+            }
+          ]
+        },
+        {
+          "alias": "last_year",
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": true,
+          "query": "import \"date\"\nprevious_year_to_study = string(v: date.year(t: -4y))\nFinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: 1990-01-01T00:00:00Z, stop: now())\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"kWh\")\n  |> filter(fn: (r) => r[\"year\"] == previous_year_to_study)\n  |> group(columns: [\"year\"])\n  |> sum(column: \"_value\")\n  |> group()\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"previous\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series"
+        },
+        {
+          "datasource": {
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
+          "expression": "$A / $B -1",
+          "hide": false,
+          "refId": "C",
+          "type": "math"
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -4007,6 +4418,7 @@
             "seriesBy": "max"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4020,6 +4432,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -4067,7 +4480,6 @@
       "hideTimeOverride": true,
       "id": 57,
       "interval": "10m",
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -4079,6 +4491,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "single",
           "sort": "none"
         }
@@ -4089,7 +4502,7 @@
           "alias": "(k)W",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -4106,7 +4519,7 @@
             }
           ],
           "hide": false,
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"_field\"] == \"W\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> group(columns: [\"_time\"])\n  |> sum(column: \"_value\")\n  |> group() ",
@@ -4143,8 +4556,8 @@
           "tz": "Europe/Paris"
         }
       ],
-      "timeShift": "12h",
-      "title": "Power Consumption - in (k)W",
+      "timeFrom": "1y",
+      "title": "Puissance consommée - en kW - 12 derniers mois",
       "transformations": [
         {
           "id": "organize",
@@ -4162,7 +4575,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb"
+        "type": "influxdb",
+        "uid": "bd80d771-a42d-42f3-8eea-c862b30dfd03"
       },
       "description": "",
       "fieldConfig": {
@@ -4171,6 +4585,7 @@
             "mode": "continuous-GrYlRd"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -4184,6 +4599,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineStyle": {
               "fill": "solid"
@@ -4365,7 +4781,6 @@
       },
       "hideTimeOverride": true,
       "id": 56,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -4378,6 +4793,7 @@
           "showLegend": true
         },
         "tooltip": {
+          "maxHeight": 600,
           "mode": "multi",
           "sort": "none"
         }
@@ -4388,7 +4804,7 @@
           "alias": "kWh/Day",
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "groupBy": [
             {
@@ -4398,7 +4814,7 @@
               "type": "time"
             }
           ],
-          "measurement": "enedisgateway_detail",
+          "measurement": "consumption_detail",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Total\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
@@ -4430,39 +4846,81 @@
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "hide": false,
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HC\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HC\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> timeShift(duration: -1d)\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HC\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "refId": "B"
         },
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "PmgauXk4k"
+            
           },
           "hide": false,
-          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HP\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"myelectricaldata\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"consumption_detail\")\n  |> filter(fn: (r) => r[\"measure_type\"] == \"HP\")\n  |> filter(fn: (r) => r[\"_field\"] == \"Wh\")\n  |> timeShift(duration: -1d)\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"HP\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries  |> yield()",
           "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"home_assistant_db\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"°C\" or r[\"_measurement\"] == \"℃\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"entity_id\"] == \"temperature_exterieur_temperature\")\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Temp. Ext.\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries |> yield()",
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            
+          },
+          "hide": false,
+          "query": "FinalOutput = [\"_field\", \"_time\", \"_value\"]\nRawSeries = from(bucket: \"home_assistant_db\")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"°C\" or r[\"_measurement\"] == \"℃\")\n  |> filter(fn: (r) => r[\"_field\"] == \"value\")\n  |> filter(fn: (r) => r[\"entity_id\"] == \"temp_interieure_moyenne\")\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\nNamedSeries = RawSeries\n  |> map(fn: (r) => ({_value:r._value, _time:r._time, _field:\"Temp. Int.\"}))\n  |> keep(columns:FinalOutput)\nNamedSeries |> yield()",
+          "refId": "E"
         }
       ],
-      "title": "Energy Consumption - per Day (k)Wh",
-      "transformations": [],
+      "timeFrom": "1y",
+      "title": "Energie consommée par jour - en kWh - 12 derniers mois",
       "type": "timeseries"
     }
   ],
   "refresh": "",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
       {
+        "auto": false,
+        "auto_count": 30,
+        "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "0.1958",
-          "value": "0.1958"
+          "text": "12345678987654",
+          "value": "12345678987654"
+        },
+        "hide": 0,
+        "label": "Point de livraison",
+        "name": "pdl",
+        "options": [
+          {
+            "selected": true,
+            "text": "12345678987654",
+            "value": "12345678987654"
+          }
+        ],
+        "query": "12345678987654",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "0.2162",
+          "value": "0.2162"
         },
         "hide": 0,
         "label": "€ / kWh Base",
@@ -4470,11 +4928,11 @@
         "options": [
           {
             "selected": true,
-            "text": "0.1958",
-            "value": "0.1958"
+            "text": "0.2162",
+            "value": "0.2162"
           }
         ],
-        "query": "0.1958",
+        "query": "0.2162",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "textbox"
@@ -4482,8 +4940,8 @@
       {
         "current": {
           "selected": false,
-          "text": "0,1535",
-          "value": "0,1535"
+          "text": "0,1736",
+          "value": "0,1736"
         },
         "hide": 0,
         "label": "€ / kWh (HC)",
@@ -4491,19 +4949,19 @@
         "options": [
           {
             "selected": true,
-            "text": "0,1535",
-            "value": "0,1535"
+            "text": "0,1736",
+            "value": "0,1736"
           }
         ],
-        "query": "0,1535",
+        "query": "0,1736",
         "skipUrlSync": false,
         "type": "textbox"
       },
       {
         "current": {
           "selected": false,
-          "text": "0,2117",
-          "value": "0,2117"
+          "text": "0,2338",
+          "value": "0,2338"
         },
         "hide": 0,
         "label": "€ / kWh (HP)",
@@ -4511,11 +4969,11 @@
         "options": [
           {
             "selected": true,
-            "text": "0,2117",
-            "value": "0,2117"
+            "text": "0,2338",
+            "value": "0,2338"
           }
         ],
-        "query": "0,2117",
+        "query": "0,2338",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -4531,12 +4989,32 @@
         "options": [
           {
             "selected": true,
-            "text": "120",
-            "value": "120"
+            "text": "250",
+            "value": "250"
           }
         ],
-        "query": "120",
+        "query": "250",
         "queryValue": "240",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "2.3",
+          "value": "2.3"
+        },
+        "hide": 0,
+        "label": "Facteur énergie primaire",
+        "name": "facteur_energie",
+        "options": [
+          {
+            "selected": true,
+            "text": "2.3",
+            "value": "2.3"
+          }
+        ],
+        "query": "2.3",
         "skipUrlSync": false,
         "type": "textbox"
       }
@@ -4546,8 +5024,35 @@
     "from": "now-1y",
     "to": "now"
   },
-  "timepicker": {},
+  "timeRangeUpdatedDuringEditOrView": false,
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
   "timezone": "",
-  "version": 1,
+  "title": "MyElectricalData - Linky Data",
+  "uid": "UNAJ_QxGy",
+  "version": 29,
   "weekStart": ""
 }
