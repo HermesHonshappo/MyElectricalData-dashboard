@@ -12,9 +12,9 @@ Give the dashboard a name and voilà
 
 Screenshots:
 
-<img width="1406" alt="Screenshot 2023-04-15 at 11 46 21" src="https://user-images.githubusercontent.com/97752752/232206461-d0a5a9b5-2c09-4115-934a-9db6d9957f57.png">
-<img width="1410" alt="Screenshot 2023-04-15 at 11 46 34" src="https://user-images.githubusercontent.com/97752752/232206469-df600929-9c39-4066-80f1-bf12b53cf13f.png">
-<img width="1409" alt="Screenshot 2023-04-15 at 11 46 41" src="https://user-images.githubusercontent.com/97752752/232206473-292d4d7f-e36a-4fac-ba2e-20d29f85592a.png">
+![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/8dde9e82-064d-44a1-b0a3-5ea8df446856)
+![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/12075dad-14a0-4996-80ea-9f3f4671af65)
+![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/ef59a9d8-d64f-4c83-b1ab-490b2edf5bf0)
 
 **Installing the connection to InfluxDB**
 
