@@ -10,6 +10,8 @@ To use, simply go to grafana, on the left pick Dashboard, Import, then select th
 
 Give the dashboard a name and voilà
 
+_If you like and use this project, you can support me with the "Sponsor" button at the top of this page_<br>
+
 Screenshots:
 
 ![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/8dde9e82-064d-44a1-b0a3-5ea8df446856)
