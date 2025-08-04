@@ -14,9 +14,9 @@ _If you like and use this project, you can support me with the "Sponsor" button 
 
 Screenshots:
 
-![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/8dde9e82-064d-44a1-b0a3-5ea8df446856)
-![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/12075dad-14a0-4996-80ea-9f3f4671af65)
-![image](https://github.com/HermesHonshappo/MyElectricalData-dashboard/assets/97752752/ef59a9d8-d64f-4c83-b1ab-490b2edf5bf0)
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/548a672b-85c8-47f7-ae03-c6524e8911f0" />
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/5482b997-aba5-43d6-8d4c-559accad4cde" />
+<img width="800" alt="image" src="https://github.com/user-attachments/assets/9f1ef1d2-6b42-42f0-92b2-f3658376f58e" />
 
 **Installing the connection to InfluxDB**
 
@@ -44,3 +44,7 @@ You need the two plugins below installed. Go to settings -> administration -> pl
 1) Added primary energy factor. Used for energy classification of house in France
 2) current and previous years are now computed automatically. Should not need an update each year
 3) current year % is now based on same consumption the year before (Jan1st to current date vs Jan1st 1 year ago vs 1 year ago today)
+
+2025-08-04 update:
+1) Dashboard design streamlined a bit
+2) Updated screenshots
